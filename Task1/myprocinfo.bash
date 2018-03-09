@@ -48,9 +48,9 @@ script="${0##*/}"
 			# total cpu
 			sum=$((diffUserMode + diffKernelMode))
 			# percentage of total cpu usage
-			prosent=$((100 / sum))
+			prosent=$((sum * 100))
 
-			echo "Det har vært $((prosent * diffUserMode))% context switch i user mode og $((prosent * diffKernelMode))% context switch i kernel mode" 
+			echo "Det har vært $(echo "scale=2; $diffUserMode / ($diffUserMode + $diffKernelMode) * 100" | bc)% context switch i user mode og $(echo "scale=2; $diffKernelMode / ($diffUserMode + $diffKernelMode) * 100" | bc)% context switch i kernel mode" 
 			;;
 		6)
 			interrupts=$(grep intr /proc/stat | awk '{print $2}')
